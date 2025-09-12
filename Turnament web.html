@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booyah Battles - Forge Your Legend</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        /* --- Base Styles & Resets --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: 
+                linear-gradient(rgba(5, 0, 15, 0.88), rgba(10, 2, 2, 0.85)), 
+                url('https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Meteor Shower Animation --- */
+        .meteors {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .meteor {
+            position: absolute;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0.6), transparent);
+            width: 150px;
+            height: 2px;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 6px #ffffff);
+            animation: meteor-fall 10s linear infinite;
+            opacity: 0;
+        }
+        
+        .meteor:nth-child(1) { top: 10%; left: 50%; animation-delay: 0s; }
+        .meteor:nth-child(2) { top: 20%; left: 80%; animation-delay: 2.5s; }
+        .meteor:nth-child(3) { top: 5%;  left: 30%; animation-delay: 5s; }
+        .meteor:nth-child(4) { top: 30%; left: 90%; animation-delay: 7.2s; }
+        .meteor:nth-child(5) { top: 15%; left: 10%; animation-delay: 8.9s; }
+
+        @keyframes meteor-fall {
+            0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: rotate(215deg) translateX(-1000px); opacity: 0; }
+        }
+        
+        /* --- Layout Container --- */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- UPDATED: Modern Navbar with Black Border --- */
+        .navbar {
+            position: sticky;
+            top: 20px;
+            width: 100%;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 0, 0, 0.25); /* Black border */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Added depth shadow */
+            border-radius: 50px;
+            z-index: 100;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff9900;
+            text-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600;
+        }
+
+        .navbar .menu { list-style: none; display: flex; align-items: center; gap: 35px; }
+        .navbar .menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .navbar .menu a:not(.support-btn):hover { color: #ffc400; text-shadow: 0 0 8px #ffc400; }
+
+        /* --- UPDATED: Glowing Yellow Support Button --- */
+        .support-btn {
+            padding: 8px 20px;
+            border: 2px solid #ffc400;
+            border-radius: 50px;
+            color: #ffc400;
+            box-shadow: 0 0 15px rgba(255, 196, 0, 0.5);
+            animation: glow-pulse 2.5s infinite ease-in-out;
+        }
+
+        .support-btn:hover {
+            background-color: rgba(255, 196, 0, 0.1);
+            box-shadow: 0 0 25px rgba(255, 196, 0, 0.8);
+        }
+
+        @keyframes glow-pulse {
+            0%   { box-shadow: 0 0 15px rgba(255, 196, 0, 0.5); }
+            50%  { box-shadow: 0 0 25px rgba(255, 196, 0, 0.8); }
+            100% { box-shadow: 0 0 15px rgba(255, 196, 0, 0.5); }
+        }
+
+        /* --- Transparent Glass Containers --- */
+        .content-section {
+            padding: 60px 50px;
+            margin-bottom: 60px;
+            text-align: center;
+            background: rgba(10, 5, 25, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .content-section h1, .content-section h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            background: -webkit-linear-gradient(45deg, #ff8c00, #ffc400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content-section h2 { font-size: 3rem; }
+
+        .support-message {
+            font-size: 1.25rem;
+            color: #e2e8f0;
+            margin: 0 auto 45px auto;
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        /* --- Square Download Button with Light Round Corners --- */
+        .download-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 196, 0, 0.6);
+            cursor: pointer;
+            background: linear-gradient(145deg, #ffc400, #ff8c00);
+            box-shadow: 0 5px 20px rgba(255, 165, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-out;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 12px 35px rgba(255, 165, 0, 0.6);
+        }
+        
+        /* --- RE-DESIGNED: Features Grid with Icons --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 196, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 196, 0, 0.25);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+            color: #ffc400;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            color: #ffc400;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p { color: #cccccc; line-height: 1.7; }
+        
+        /* --- Footer Section --- */
+        .footer {
+            background-color: rgba(5, 0, 15, 0.8);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .stat-item { font-size: 1.8rem; font-weight: 700; color: #ffc400; }
+        .stat-item span { display: block; color: #cccccc; font-size: 1rem; font-weight: 400; margin-top: 8px; }
+        .footer .copyright { margin-top: 30px; color: #888; font-size: 0.9rem; }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+                border-radius: 20px;
+                width: 95%;
+                margin: 20px auto 30px auto;
+                position: static;
+                padding: 20px;
+            }
+            .navbar .menu { flex-wrap: wrap; justify-content: center; gap: 15px 25px; }
+            .support-btn { padding: 6px 16px; font-size: 0.9rem; }
+            .content-section { padding: 40px 25px; }
+            .content-section h1 { font-size: 2.5rem; }
+            .content-section h2 { font-size: 2.2rem; }
+            .support-message { font-size: 1.1rem; }
+            .download-btn { padding: 16px 35px; font-size: 1.3rem; }
+            .footer-stats { flex-direction: column; gap: 30px; }
+            .stat-item { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Meteor Shower Container -->
+<div class="meteors">
+    <div class="meteor"></div>
+    <div class="meteor"></div>
+    <div class="meteor"></div>
+    <div class="meteor"></div>
+    <div class="meteor"></div>
+</div>
+
+<div class="container">
+    <!-- Header & Modern Navbar -->
+    <header class="navbar">
+        <div class="logo">Booyah Battles</div>
+        <ul class="menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#free-matches">Free Matches</a></li>
+            <li><a href="#tournaments">Tournaments</a></li>
+            <li><a href="https://t.me/darkdevilcracker" class="support-btn" target="_blank" rel="noopener noreferrer">Support</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="content-section">
+            <h1>Forge Your Legend. The Ultimate Arena Awaits.</h1>
+            <p class="support-message">
+                Step into a world of non-stop Free Fire tournaments. Where skill is rewarded, competition is fair, and victory earns you more than just bragging rights. Your path to becoming a champion starts here.
+            </p>
+            <a href="https://www.mediafire.com/file/f0jg94pntbapezd/Booyah+Battles+(2).apk/file" class="download-btn" target="_blank" rel="noopener noreferrer">
+                Download The App
+            </a>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="content-section">
+            <h2>Engineered for the Ultimate Competitor</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <h3>Endless Action</h3>
+                    <p>Jump into back-to-back tournaments running all day, every day. Whether you're an early bird or a night owl, the battleground is always ready for you.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.017h-.008v-.017z" /></svg>
+                    <h3>Ironclad Fair Play</h3>
+                    <p>Our zero-tolerance policy, advanced anti-cheat, and active admins ensure a level playing field. We guarantee a space where only your skill determines the outcome.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m12 3V9" /></svg>
+                    <h3>Instant & Secure Payouts</h3>
+                    <p>Your winnings are yours to keep. Withdraw your prize money instantly and securely, directly to your account. No delays, no excuses.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- NEW: Free Matches Section -->
+        <section id="free-matches" class="content-section">
+            <h2>Free Matches</h2>
+            <p class="support-message">
+                Not ready for the high-stakes games? Our Free Matches are the perfect place to warm up, test new strategies, and prove your skill against real players. Win smaller prizes and earn bragging rights without any entry fee.
+            </p>
+        </section>
+
+        <!-- Tournaments Section -->
+        <section id="tournaments" class="content-section">
+            <h2>The Gauntlet is Being Prepared</h2>
+            <p class="support-message">
+                New tournaments are launching soon! Download the app and get ready to join the fight. Be the first to conquer the leaderboards.
+            </p>
+        </section>
+    </main>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-stats">
+        <div class="stat-item">
+            10,000+
+            <span>Trusted Users</span>
+        </div>
+        <div class="stat-item">
+            24/7
+            <span>Active Tournaments</span>
+        </div>
+        <div class="stat-item">
+            Instant
+            <span>Withdrawals</span>
+        </div>
+        <div class="stat-item">
+            ₹86,000+
+            <span>Paid Out to Winners</span>
+        </div>
+  <div class="stat-item">
+            Daily 
+            <span>Free Matches</span>
+        </div>
+    </div>
+    <p class="copyright">
+        © 2025 Booyah Battles. All Rights Reserved. Built for champions, by Gamers.
+    </p>
+</footer>
+
+</body>
+</html>
